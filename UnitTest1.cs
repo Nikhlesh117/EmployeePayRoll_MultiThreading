@@ -1,10 +1,12 @@
-﻿namespace EmployeePayrollMultiThreading
+using EmployeePayrollMultiThreading;
+namespace TestProject1
 {
-    class Program
+    [TestClass]
+    public class UnitTest1
     {
-        public static void Main(string[] args)
+        [TestMethod]
+        public void Given10Employee_WhenAddedToList_ShouldMatchEmployeeEntries()
         {
-            Console.WriteLine("Welcome To The Employee Payroll Multi Threading");
             List<EmployeeDetails> employeeDetails = new List<EmployeeDetails>();
             employeeDetails.Add(new EmployeeDetails(Id: 1, Name: "Jyoti", Salary: 850000, Gender: 'F', Address: "Noida", PhoneNumber: 7815879856, Department: "Software Developer", BasicPay: 785000, Deductions: 1500, TaxablePay: 1000, IncomeTax: 2000, NetPay: 1500));
             employeeDetails.Add(new EmployeeDetails(Id: 2, Name: "Wayne", Salary: 750000, Gender: 'F', Address: "Delhi", PhoneNumber: 8815879856, Department: "Account", BasicPay: 705000, Deductions: 2500, TaxablePay: 1500, IncomeTax: 2500, NetPay: 2500));
@@ -17,49 +19,22 @@
             employeeDetails.Add(new EmployeeDetails(Id: 9, Name: "Clark", Salary: 860000, Gender: 'M', Address: "Mumbai", PhoneNumber: 7235879856, Department: "Tester", BasicPay: 785050, Deductions: 1509, TaxablePay: 2400, IncomeTax: 3100, NetPay: 2500));
             employeeDetails.Add(new EmployeeDetails(Id: 10, Name: "Kent", Salary: 770000, Gender: 'F', Address: "Agra", PhoneNumber: 7818879856, Department: "IT", BasicPay: 785250, Deductions: 1507, TaxablePay: 2300, IncomeTax: 3200, NetPay: 2600));
 
-            EmployeePayroll employeePayRoll = new EmployeePayroll();
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Welcome to the Employee Payroll MultiThreading");
-                Console.WriteLine("Please select given options:---\n--------------------------------");
-                Console.WriteLine("1.Add mutliple employee to payrollDB without thread\n" +
-                    "2.Add mutliple employee to payrollDB with thread\n" +
-                    "10.Exit\n");
-                int option = Convert.ToInt32(Console.ReadLine());
-                switch (option)
-                {
-                    case 1:
-                        Console.Clear();
-                        DateTime startdateTime = DateTime.Now;
-                        employeePayRoll.AddEmployeeToPayroll(employeeDetails);
-                        DateTime stopdateTime = DateTime.Now;
-                        Console.WriteLine("Duation without thread" + (stopdateTime - startdateTime));
-                        Console.WriteLine("\nPress any key to continue...... ");
-                        Console.ReadLine();
-                        Console.Clear();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        DateTime startdateTimeThread = DateTime.Now;
-                        employeePayRoll.AddEmployeeToPayrollWithThread(employeeDetails);
-                        DateTime stopdateTimeThread = DateTime.Now;
-                        Console.WriteLine("Duation with thread" + (stopdateTimeThread - startdateTimeThread));
-                        Console.ReadLine();
-                        Console.Clear();
-                        break;
-                    case 10:
-                        Console.Clear();
-                        Console.ReadLine();
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("Select only give options");
-                        break;
-                }
-            }
+            //UC1-Ability to add multiple employee to payroll DB using without thread
 
+            EmployeePayroll employeePayRollOperation = new EmployeePayroll();
+            employeePayRollOperation.AddEmployeeToPayroll(employeeDetails);
+            DateTime startdateTime = DateTime.Now;
+            employeePayRollOperation.AddEmployeeToPayroll(employeeDetails);
+            DateTime stopdateTime = DateTime.Now;
+            Console.WriteLine("Duation without thread" + (stopdateTime - startdateTime));
+
+            //UC2-Ability to add multiple employee to payroll DB using with thread
+            EmployeePayroll employeePayRollOperationThread = new EmployeePayroll();
+            employeePayRollOperationThread.AddEmployeeToPayrollWithThread(employeeDetails);
+            DateTime startdateTimeThread = DateTime.Now;
+            employeePayRollOperation.AddEmployeeToPayroll(employeeDetails);
+            DateTime stopdateTimeThread = DateTime.Now;
+            Console.WriteLine("Duation with thread   " + (stopdateTimeThread - startdateTimeThread));
         }
     }
 }
-
